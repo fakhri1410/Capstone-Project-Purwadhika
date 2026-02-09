@@ -1,0 +1,96 @@
+# ==========================================
+# CAPSTONE PROJECT : RENTAL MOBIL
+# Fakhri
+# ==========================================
+
+#DATA COLLECTION
+daftar_mobil = [
+    {'id': 'MB01', 'merk': 'Mercedes', 'model': 'C-Class', 'tahun': 2022, 'harga': 1500000},
+    {'id': 'PR01', 'merk': 'Porsche', 'model': '911', 'tahun': 2021, 'harga': 5000000},
+    {'id': 'LR01', 'merk': 'Land Rover', 'model': 'Defender', 'tahun': 2023, 'harga': 3000000}
+]
+
+def tampilkan_mobil():
+    if len(daftar_mobil) == 0:
+        print("\n--- Tidak ada data mobil dalam sistem ---")
+    else:
+        print("\n--- Daftar Mobil Tersedia ---")
+        print("ID \t| Merk \t\t| Model \t| Tahun | Harga Sewa")
+        print("-" * 60)
+        for mobil in daftar_mobil:
+            print(f"{mobil['id']} \t| {mobil['merk']} \t| {mobil['model']} \t| {mobil['tahun']} \t| {mobil['harga']}")
+
+def tambah_mobil():
+    id_baru = input("Masukkan ID Mobil Baru (Contoh: TY01): ")
+    
+    for mobil in daftar_mobil:
+        if mobil['id'] == id_baru:
+            print("Error: ID sudah terdaftar! Gunakan ID lain.")
+            return
+
+    merk = input("Masukkan Merk: ")
+    model = input("Masukkan Model: ")
+    tahun = input("Masukkan Tahun: ")
+    harga = input("Masukkan Harga Sewa: ")
+    
+    daftar_mobil.append({
+        'id': id_baru, 
+        'merk': merk, 
+        'model': model, 
+        'tahun': int(tahun), 
+        'harga': int(harga)
+    })
+    print("\n[Data Berhasil Ditambahkan]")
+
+def update_harga():
+    tampilkan_mobil()
+    id_cari = input("\nMasukkan ID mobil yang harganya ingin diubah: ")
+    for mobil in daftar_mobil:
+        if mobil['id'] == id_cari:
+            harga_baru = input(f"Masukkan harga baru untuk {mobil['merk']} {mobil['model']}: ")
+            mobil['harga'] = int(harga_baru)
+            print("\n[Harga Berhasil Diperbarui]")
+            return
+    print("\n[ID tidak ditemukan]")
+
+def hapus_mobil():
+    tampilkan_mobil()
+    id_cari = input("\nMasukkan ID mobil yang ingin dihapus: ")
+    for i in range(len(daftar_mobil)):
+        if daftar_mobil[i]['id'] == id_cari:
+            confirm = input(f"Yakin ingin menghapus {daftar_mobil[i]['merk']}? (y/n): ")
+            if confirm.lower() == 'y':
+                del daftar_mobil[i]
+                print("\n[Mobil berhasil dihapus]")
+            return
+    print("\n[ID tidak ditemukan]")
+
+def main_menu():
+    while True:
+        print("\n" + "="*30)
+        print("   APLIKASI RENTAL MOBIL")
+        print("="*30)
+        print("1. Lihat Daftar Mobil")
+        print("2. Tambah Mobil Baru")
+        print("3. Update Harga Sewa")
+        print("4. Hapus Mobil")
+        print("5. Keluar")
+        
+        pilihan = input("\nPilih menu (1-5): ")
+        
+        if pilihan == '1':
+            tampilkan_mobil()
+        elif pilihan == '2':
+            tambah_mobil()
+        elif pilihan == '3':
+            update_harga()
+        elif pilihan == '4':
+            hapus_mobil()
+        elif pilihan == '5':
+            print("Terima kasih telah menggunakan sistem kami!")
+            break
+        else:
+            print("Pilihan menu tidak tersedia.")
+
+if __name__ == "__main__":
+    main_menu()
